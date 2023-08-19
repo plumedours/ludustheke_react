@@ -7,6 +7,9 @@ import BoardGames from './components/games/BoardGames.jsx';
 import VideoGames from './components/games/VideoGames.jsx';
 import About from './components/about';
 import Contact from './components/contact';
+import Register from './components/auth/Register.jsx';
+import Login from './components/auth/Login';
+import Dashboard from './components/auth/Dashboard';
 
 function App() {
 
@@ -21,6 +24,9 @@ function App() {
             <Route path="/games/video" element={<VideoGames />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             {/* ... autres routes */}
           </Routes>
         </Router>

@@ -1,0 +1,22 @@
+/* .modal-overlay {
+    animation: fadeIn 0.3s ease-out;
+}
+.modal-container {
+    animation: slideIn 0.3s ease-out;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.75;
+    }
+}
+@keyframes slideIn {
+    from {
+        transform: translateY(-10%);
+    }
+    to {
+        transform: translateY(0);
+    }
+} */
