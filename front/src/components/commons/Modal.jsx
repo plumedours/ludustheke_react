@@ -1,24 +1,36 @@
 import Modal from "react-modal";
-import "./Modal.css";
+import { useDarkMode } from "./DarkModeContext";
+import { categoryColors } from "./CategoriesColors";
 
 Modal.setAppElement("#root");
 
 const CustomModal = ({ isOpen, onRequestClose, selectedGame }) => {
+    const { darkMode } = useDarkMode();
+
     return (
         <div className={`fixed inset-0 flex items-center justify-center z-50 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
-            <div className="modal-overlay absolute inset-0 bg-gray-500 opacity-75"></div>
-            <div className="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
-                <div className="ModalContent p-4 bg-white rounded shadow-md">
-                    <button className="close-button" onClick={onRequestClose}>
+            <div className="absolute inset-0 bg-neutral-500 opacity-75" onClick={onRequestClose}></div>
+            <div className='w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto mb-80'>
+                <div className={`p-4 ${darkMode ? 'bg-neutral-900' : 'bg-white'} rounded shadow-md`}>
+                    <button className={`close-button ${darkMode ? 'text-neutral-300' : 'text-neutral-700'}`} onClick={onRequestClose}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                     {selectedGame && (
-                        <div className="flex flex-col max-w-xl justify-center rounded border shadow-md text-neutral-700">
+                        <div className={`flex flex-col max-w-xl justify-center rounded border shadow-md ${darkMode ? 'bg-neutral-800 text-neutral-300 shadow-neutral-600 border-neutral-800' : 'bg-white text-neutral-700'}`}>
                             <div key={selectedGame.id} className="flex flex-col flex-grow justify-center p-3">
                                 <img className="flex self-center w-36" src={selectedGame.cover} alt="" />
                                 <h2 className="text-xl text-center font-semibold py-2">{selectedGame.title}</h2>
+                                <p className="flex flex-wrap mx-auto text-xs font-semibold">
+                                    {selectedGame.category_names && selectedGame.category_names.split(',').map(category => (
+                                        <span
+                                            key={category}
+                                            style={{ backgroundColor: categoryColors[category] }} // Utilisation du nom de catégorie pour accéder à la couleur correspondante
+                                            className="rounded-md px-1 mr-1 mb-1 inline-block"
+                                        >{category}</span>
+                                    ))}
+                                </p>
                                 <p>{selectedGame.shortDesc}</p>
                                 <div className="flex flex-row">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#1dd1a1" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-6 h-6">
@@ -28,8 +40,8 @@ const CustomModal = ({ isOpen, onRequestClose, selectedGame }) => {
                                 </div>
                                 <p>Number of comments: {selectedGame.numComments}</p>
                             </div>
-                            <div className="flex flex-row justify-center border-t w-full gap-3 py-3">
-                                <div className="hover:scale-110 transition">
+                            <div className={`flex flex-row justify-center border-t w-full gap-3 py-3 ${darkMode ? 'border-neutral-600' : 'border-neutral-300'}`}>
+                                <div className="hover:scale-110 transition cursor-pointer hover:text-red-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                                     </svg>

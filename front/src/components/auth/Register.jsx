@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-    const [name, setName] = useState('');
+    const [pseudo, setPseudo] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
@@ -13,13 +13,21 @@ const Register = () => {
     const Register = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/users', {
-                name: name,
+            if (password !== confPassword) {
+                setMsg("Les mots de passe ne correspondent pas.");
+                return;
+            }
+
+            const response = await axios.post('http://localhost:5000/register', {
+                pseudo: pseudo,
                 email: email,
                 password: password,
-                confPassword: confPassword
+                confPassword: confPassword // Include the confirmation password
             });
-            navigate("/");
+
+            if (response.status === 201) {
+                navigate("/");
+            }
         } catch (error) {
             if (error.response) {
                 setMsg(error.response.data.msg);
@@ -40,7 +48,7 @@ const Register = () => {
                             <label className="text-sm text-neutral-700 font-semibold">Pseudo</label>
                             <div className="controls">
                                 <input type="text" className="bg-neutral-50 w-full p-2 rounded shadow-md" placeholder="Name"
-                                    value={name} onChange={(e) => setName(e.target.value)} />
+                                    value={pseudo} onChange={(e) => setPseudo(e.target.value)} />
                             </div>
                         </div>
                         <div className="flex flex-col mb-2 w-full justify-start gap-1">

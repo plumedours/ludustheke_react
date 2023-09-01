@@ -1,4 +1,5 @@
-function MissionText() {
+const MissionText = () => {
+
     return (
         <div className="flex flex-col gap-2 pt-2">
             <p>Chez LudusTheke, notre mission est de créer un espace dynamique et inclusif pour les amateurs de jeux de société et de jeux vidéo. Nous croyons fermement au pouvoir du jeu pour rassembler les gens, stimuler l’imagination et favoriser le divertissement.</p>

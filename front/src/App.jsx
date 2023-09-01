@@ -9,30 +9,50 @@ import About from './components/about';
 import Contact from './components/contact';
 import Register from './components/auth/Register.jsx';
 import Login from './components/auth/Login';
-import Dashboard from './components/auth/Dashboard';
+// import Dashboard from './components/auth/Dashboard';
+import GameDetails from './components/games/GameDetails';
+import { DarkModeProvider, useDarkMode } from './components/commons/DarkModeContext';
+import Sidebar from './components/header/Sidebar';
+import { UserProvider } from './context/UserContext';
+// import AdminRoute from './routes/AdminRoute';
 
 function App() {
+  return (
+    <DarkModeProvider>
+      <AppContent />
+    </DarkModeProvider>
+  )
+}
+
+function AppContent() {
+  const { darkMode } = useDarkMode();
 
   return (
-    <>
-      <div className="flex flex-col min-h-screen">
-        <Router>
+    <div className={`flex flex-col min-h-screen ${darkMode ? 'bg-neutral-900' : 'bg-white'}`}>
+      <Router>
+        <UserProvider>
           <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/games/board" element={<BoardGames />} />
-            <Route path="/games/video" element={<VideoGames />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            {/* ... autres routes */}
-          </Routes>
-        </Router>
-        <Footer />
-      </div>
-    </>
+          <div className='flex flex-row flex-grow'>
+            <Sidebar />
+            <div className="flex w-11/12 mx-auto">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/boardgames" element={<BoardGames />} />
+                <Route path="/videogames" element={<VideoGames />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                {/* <Route path="/dashboard" element={<Dashboard />} requiredRole="admin" /> */}
+                <Route path="/games/:id" element={<GameDetails />} />
+                {/* ... autres routes */}
+              </Routes>
+            </div>
+          </div>
+        </UserProvider>
+      </Router>
+      <Footer />
+    </div>
   )
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,9 +13,12 @@ const Login = () => {
         try {
             await axios.post('http://localhost:5000/login', {
                 email: email,
-                password: password
+                password: password,
+            }, {
+                withCredentials: true, // Inclure les options de configuration ici
             });
-            navigate("/dashboard");
+            console.log("Login success");
+            navigate("/");
         } catch (error) {
             if (error.response) {
                 setMsg(error.response.data.msg);

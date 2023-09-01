@@ -15,7 +15,6 @@ const CommentsSection = ({ boardGameId }) => {
         };
         fetchComments();
     }, [boardGameId]);
-    // const numberOfComments = comments.length;
 
     return (
         <div>
@@ -32,18 +31,5 @@ const CommentsSection = ({ boardGameId }) => {
         </div>
       );
 };
-
-//TEST
-export const getNumberOfComments = (boardGameId) => {
-    // Ici, vous pouvez réutiliser le même code pour récupérer les commentaires
-    // et retourner le nombre de commentaires
-    return axios.get(`http://localhost:5000/boardgames/${boardGameId}/comments`)
-        .then((res) => res.data.length)
-        .catch((err) => {
-            console.log(err);
-            return 0;
-        });
-};
-//FIN TEST
 
 export default CommentsSection;

@@ -1,14 +1,14 @@
-import AllBoardGames from "../home/BoardGames";
+import TopAllGames from "./TopGames";
+import sloganMobile from "../../assets/slogan-mobile.png";
 
 function HomeContent() {
-    return (
-      <div className="flex-grow">
-          <div className="flex flex-col items-center p-3">
-              <h1 className="text-2xl font-bold text-neutral-600">BODY</h1>
-              <AllBoardGames />
-          </div>
-      </div>
-    );
-  }
-  
-  export default HomeContent;
+
+  return (
+    <div className="flex-grow w-min">
+      <img className="mt-5 mx-auto w-11/12 max-w-2xl" src={sloganMobile} alt="" />
+      <TopAllGames />
+    </div>
+  );
+}
+
+export default HomeContent;
