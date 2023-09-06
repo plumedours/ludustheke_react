@@ -2,13 +2,14 @@ import express from 'express';
 import mysql from 'mysql';
 import cors from 'cors';
 // import authController from "./authController.js";
-import authRoutes from "./routes/authRoutes.js";
+import authRoutes from './routes/authRoutes.js';
 import cookieParser from 'cookie-parser';
+import authenticateToken from './middleware/authMiddleware.js';
 
 const corsOptions = {
 	origin: 'http://localhost:5173', // Remplacez ceci par l'URL de votre frontend
 	credentials: true, // Permet l'envoi de cookies et d'en-têtes d'authentification
-  };
+};
 
 const app = express();
 app.use(cors(corsOptions));
@@ -194,6 +195,46 @@ app.get('/games/:id', (req, res) => {
 		});
 	});
 });
+
+// Route pour obtenir les informations de l'utilisateur connecté
+app.get('/dashboard', authenticateToken, (req, res) => {
+	const userId = req.user.id; // Obtenez l'ID de l'utilisateur à partir du token JWT
+	console.log('USERid', userId);
+	console.log('USER', req.user);
+	console.log('REQ', req);
+	console.log('RES', res);
+
+	const q = 'SELECT * FROM users WHERE id = ?';
+	db.query(q, [userId], (err, data) => {
+		if (err) {
+			console.log(err);
+			return res.status(500).json({
+				error: 'Erreur lors de la récupération des informations utilisateur',
+			});
+		}
+		if (data.length === 0) {
+			return res.status(404).json({ error: 'Utilisateur non trouvé' });
+		}
+		const userInfo = data[0]; // Récupérez les informations de l'utilisateur
+		return res.json(userInfo);
+	});
+});
+
+// // Route pour obtenir les jeux proposés par l'utilisateur connecté
+// app.get('/dashboard/user-games', authenticateToken, (req, res) => {
+// 	const userId = req.user.id; // Obtenez l'ID de l'utilisateur à partir du token JWT
+// 	const q = 'SELECT * FROM games WHERE user_id = ?';
+
+// 	db.query(q, [userId], (err, data) => {
+// 		if (err) {
+// 			console.log(err);
+// 			return res.status(500).json({
+// 				error: "Erreur lors de la récupération des jeux de l'utilisateur",
+// 			});
+// 		}
+// 		return res.json(data);
+// 	});
+// });
 
 app.get('/test', (req, res) => {
 	const q = `

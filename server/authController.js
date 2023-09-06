@@ -58,7 +58,8 @@ export const loginUser = (req, res) => {
 		}
 
 		const user = results[0];
-		console.log(user);
+		console.log('user', user);
+		
 		bcrypt.compare(password, user.password, (err, match) => {
 			if (err || !match) {
 				return res.status(400).json({ msg: 'Identifiants invalides.' });
@@ -73,15 +74,16 @@ export const loginUser = (req, res) => {
                 expiresIn: '1h',
             });
 
-			console.log(token);
-			console.log(payload);
+			console.log('token 2', token);
+			console.log('playload', payload);
 
 			const cookieOptions = {
-				httpOnly: true,
+				httpOnly: false,
 				maxAge: 3600000, // Durée d'expiration du cookie en millisecondes (1 heure)
 			};
 
 			res.cookie('token', token, cookieOptions, { sameSite: 'none', secure: true });
+			res.header('Authorization', `Bearer ${token}`);
 
 			return res.status(200).json({ token });
 		});
