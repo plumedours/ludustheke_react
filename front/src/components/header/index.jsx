@@ -24,7 +24,8 @@ const Navbar = () => {
             const decodedToken = jwt_decode(token);
             setUser({ ...user, role: decodedToken.role });
         }
-    }, [user, setUser]);
+        console.log('token', token);
+    }, []);
 
     console.log('4', user);
 
@@ -32,7 +33,8 @@ const Navbar = () => {
         try {
             await axios.post('http://localhost:5000/logout', {}, { withCredentials: true });
             setUser({ role: '' });
-            navigate('/');
+            window.location.href = '/';
+            // navigate('/');
         } catch (error) {
             console.error('Erreur lors de la déconnexion :', error);
         }

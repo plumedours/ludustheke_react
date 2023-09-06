@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [msg, setMsg] = useState('');
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const Auth = async (e) => {
         e.preventDefault();
@@ -17,8 +17,11 @@ const Login = () => {
             }, {
                 withCredentials: true, // Inclure les options de configuration ici
             });
+
             console.log("Login success");
-            navigate("/");
+
+            window.location.href = '/';
+            // navigate("/");
         } catch (error) {
             if (error.response) {
                 setMsg(error.response.data.msg);

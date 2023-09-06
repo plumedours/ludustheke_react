@@ -9,7 +9,7 @@ import About from './components/about';
 import Contact from './components/contact';
 import Register from './components/auth/Register.jsx';
 import Login from './components/auth/Login';
-// import Dashboard from './components/auth/Dashboard';
+import Dashboard from './components/dashboard';
 import GameDetails from './components/games/GameDetails';
 import { DarkModeProvider, useDarkMode } from './components/commons/DarkModeContext';
 import Sidebar from './components/header/Sidebar';
@@ -44,6 +44,7 @@ function AppContent() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 {/* <Route path="/dashboard" element={<Dashboard />} requiredRole="admin" /> */}
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/games/:id" element={<GameDetails />} />
                 {/* ... autres routes */}
               </Routes>
